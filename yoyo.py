@@ -33,8 +33,8 @@ try:
     while True:
         # Wait for a coherent pair of frames: depth and left/right color
         frames = pipeline.wait_for_frames()
-        left_frame = frames.get_color_frame(0)
-        right_frame = frames.get_color_frame(1)
+        left_frame = frames.get_stream(rs.stream.color, 0)
+        right_frame = frames.get_stream(rs.stream.color, 1)
 
         if not left_frame or not right_frame:
             continue
