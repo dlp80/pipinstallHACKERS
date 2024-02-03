@@ -2,6 +2,10 @@ import tkinter as tk
 from tkinter import messagebox
 import pygame
 from pygame.locals import *
+from OpenGL.GL import *
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+from datetime import datetime
 
 # Function to start the workout and open the OpenGL window
 def start_workout():
@@ -26,8 +30,17 @@ def start_workout():
         glVertex3fv((-1, -1, -5))
         glVertex3fv((1, -1, -5))
         glEnd()
+
         pygame.display.flip()
         pygame.time.wait(10)
+
+# Function to update the date and time label
+def update_datetime_label():
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    current_date = now.strftime("%Y-%m-%d")
+    datetime_label.config(text=f"Date: {current_date}\nTime: {current_time}")
+    root.after(1000, update_datetime_label)  # Update every 1000 milliseconds (1 second)
 
 # Create the main window
 root = tk.Tk()
@@ -39,6 +52,12 @@ title_label.pack(pady=20)
 
 start_button = tk.Button(root, text="Push button to start workout", command=start_workout)
 start_button.pack()
+
+datetime_label = tk.Label(root, text="")
+datetime_label.pack()
+
+# Initial update of date and time
+update_datetime_label()
 
 # Run the Tkinter event loop
 root.mainloop()
