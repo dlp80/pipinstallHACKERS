@@ -6,11 +6,49 @@ from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from datetime import datetime
+import cv2
+import pyrealsense2 as rs
+import numpy as np
+
+# Initialize Pygame
+pygame.init()
+
+# Initialize the RealSense pipeline
+pipeline = rs.pipeline()
+config = rs.config()
+config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+
+# Function to open the depth camera
+def open_depth_camera():
+    pipeline.start(config)
+
+    def cvimage_to_pygame(image):
+        """Convert cvimage into a pygame image"""
+        return pygame.image.frombuffer(image.tobytes(), image.shape[1::-1], "RGB")
+
+    while True:
+        frames = pipeline.wait_for_frames()
+        color_frame = frames.get_color_frame()
+
+        if not color_frame:
+            continue
+
+        frame = np.asanyarray(color_frame.get_data())
+        image = cvimage_to_pygame(frame)
+
+        screen.blit(image, (0, 0))
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                cv2.destroyAllWindows()
+                pipeline.stop()
+                exit()
 
 # Function to start the workout and open the OpenGL window
 def start_workout():
-    # Additional setup for the workout can be added here
-    # For simplicity, let's just open a basic Pygame OpenGL window
+    open_depth_camera()  # Call the function to open the depth camera
 
     pygame.init()
     screen = pygame.display.set_mode((800, 600), DOUBLEBUF | OPENGL)
@@ -40,7 +78,7 @@ def update_datetime_label():
     current_time = now.strftime("%H:%M:%S")
     current_date = now.strftime("%Y-%m-%d")
     datetime_label.config(text=f"Date: {current_date}\nTime: {current_time}")
-    root.after(1000, update_datetime_label)  # Update every 1000 milliseconds (1 second)
+    root.after(1000, update_datetime_label)
 
 # Create the main window
 root = tk.Tk()
