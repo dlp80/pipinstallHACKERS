@@ -7,31 +7,49 @@ from PySide6.QtUiTools import QUiLoader
 # import GUI.open_gui as ui
 # import GUI.interface_gui as ui2
 from GUI.open_gui import Ui_open_main
-from GUI.interface_gui import Ui_interface_main
+from GUI.interface_gui import Ui_Form
 
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from GUI.open_gui import Ui_open_main
 
-class MyMainWindow(QMainWindow, Ui_open_main):
+class MyMainWindow(QMainWindow, Ui_Form):
+    accuracy = 0
+    workout = ""
+    
     def __init__(self, parent=None):
         super(MyMainWindow, self).__init__(parent)
-        self.ui = Ui_open_main()
+        self.ui = Ui_Form()
         self.ui.setupUi(self)
         
-        self.ui.start_button.clicked.connect(self.interface)
         
-    def interface(self):
-        print("it is working")
-        new_window = InterfaceWindow()
-        new_window.show()
+        self.ui.accuracy_bar.setValue(0)
+        self.update()
+        
+    def update(self):
+        self.enter_test()
+        self.ui.accuracy_bar.setValue(int(self.accuracy))
+        
+    def set_workout(self, workout):
+        self.workout = workout
+        
+    def get_workout(self):
+        return self.workout
             
-class InterfaceWindow(QMainWindow):
-    def __init__(self):
-        super(InterfaceWindow, self).__init__()
-        self.ui2 = Ui_interface_main()
-        self.ui2.setupUi(self)
+    def set_accuracy(self, a):
+        self.accuracy = a
+        print(a)
         
+    def get_accuracy(self):
+        return self.accuracy
+
+    def enter_test(self):
+        test = input("enter value for accuracy: ") 
+        self.set_accuracy(test)
+        print(self.accuracy)
+     
+
+    
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
