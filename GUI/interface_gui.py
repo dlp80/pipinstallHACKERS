@@ -9,14 +9,12 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_interface_main(object):
-    def setupUi(self, interface_main):
-        interface_main.setObjectName("interface_main")
-        interface_main.resize(436, 601)
-        self.centralwidget = QtWidgets.QWidget(parent=interface_main)
-        self.centralwidget.setObjectName("centralwidget")
-        self.selection = QtWidgets.QTabWidget(parent=self.centralwidget)
-        self.selection.setGeometry(QtCore.QRect(10, 10, 411, 541))
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(436, 601)
+        self.selection = QtWidgets.QTabWidget(parent=Form)
+        self.selection.setGeometry(QtCore.QRect(10, 20, 411, 541))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(10)
@@ -54,24 +52,16 @@ class Ui_interface_main(object):
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
         self.selection.addTab(self.tab_2, "")
-        interface_main.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(parent=interface_main)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 436, 22))
-        self.menubar.setObjectName("menubar")
-        interface_main.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(parent=interface_main)
-        self.statusbar.setObjectName("statusbar")
-        interface_main.setStatusBar(self.statusbar)
 
-        self.retranslateUi(interface_main)
+        self.retranslateUi(Form)
         self.selection.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(interface_main)
+        QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, interface_main):
+    def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        interface_main.setWindowTitle(_translate("interface_main", "MainWindow"))
-        self.accuracy_box.setTitle(_translate("interface_main", "Accuracy"))
-        self.workout_box.setTitle(_translate("interface_main", "Workout"))
-        self.exercise_name.setText(_translate("interface_main", "TextLabel"))
-        self.selection.setTabText(self.selection.indexOf(self.tab), _translate("interface_main", "Exercise"))
-        self.selection.setTabText(self.selection.indexOf(self.tab_2), _translate("interface_main", "Example"))
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.accuracy_box.setTitle(_translate("Form", "Accuracy"))
+        self.workout_box.setTitle(_translate("Form", "Workout"))
+        self.exercise_name.setText(_translate("Form", "TextLabel"))
+        self.selection.setTabText(self.selection.indexOf(self.tab), _translate("Form", "Exercise"))
+        self.selection.setTabText(self.selection.indexOf(self.tab_2), _translate("Form", "Example"))
