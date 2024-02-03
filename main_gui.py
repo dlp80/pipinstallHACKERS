@@ -27,8 +27,9 @@ class MyMainWindow(QMainWindow, Ui_Form):
         self.update()
         
     def update(self):
-        self.enter_test()
+        # self.enter_test()
         self.ui.accuracy_bar.setValue(int(self.accuracy))
+        # self.testbench()
         
     def set_workout(self, workout):
         self.workout = workout
@@ -38,7 +39,6 @@ class MyMainWindow(QMainWindow, Ui_Form):
             
     def set_accuracy(self, a):
         self.accuracy = a
-        print(a)
         
     def get_accuracy(self):
         return self.accuracy
@@ -46,8 +46,16 @@ class MyMainWindow(QMainWindow, Ui_Form):
     def enter_test(self):
         test = input("enter value for accuracy: ") 
         self.set_accuracy(test)
-        print(self.accuracy)
      
+    def testbench(self):
+        
+        for i in range(10000):
+            self.set_accuracy(i)
+            if(i > 9000):
+                i = 0
+                
+            self.ui.accuracy_bar.setValue(int(i))
+            print(" acc : " + str(i))
 
     
 
