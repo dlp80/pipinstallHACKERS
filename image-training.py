@@ -9,5 +9,7 @@ from keras.utils import np_utils
 from skimage.transform import resize   # for resizing images
 import imutils
 
+print("starting now...")
+
 
 
